@@ -1,0 +1,40 @@
+{
+  "name": "node-sendsay",
+  "version": "1.0.0",
+  "description": "Node.js client for Sendsay service",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "compile": "tsc",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && npm run compile",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pshvedov/node-sendsay.git"
+  },
+  "keywords": [
+    "Sendsay",
+    "nodejs"
+  ],
+  "author": "Pavel Shvedov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pshvedov/node-sendsay/issues"
+  },
+  "homepage": "https://github.com/pshvedov/node-sendsay#readme",
+  "devDependencies": {
+    "@types/node": "^16.4.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2",
+    "tsconfig-paths": "^3.10.1",
+    "typescript": "^4.3.5"
+  }
+}
