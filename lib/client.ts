@@ -2,23 +2,12 @@ import { Action, isPublicAction } from './actions';
 import { NOT_AUTHORIZED, NO_API_KEY_SPECIFIED, NO_API_URL_SPECIFIED } from './errors';
 import { post } from './http';
 import { EventEmitter } from 'events';
+import { SendsayRequest } from './models/sendsay-request';
+import { SendsayResponse } from './models/sendsay-response';
+import { SendsayBody } from './models/sendsay-body';
+import { SendsayCredentials } from './models/sendsay-credentials';
 
 const DEFAULT_API_URL = 'https://api.sendsay.ru';
-
-export interface SendsayRequest extends Record<string, string | null> {
-  action: Action;
-}
-
-export interface SendsayResponse extends Record<string, string | null> {
-  'request.id': string;
-  duration: string | null;
-}
-
-export interface SendsayCredentials {
-  login: string;
-  sublogin: string;
-  password: string;
-}
 
 export class SendsayClient extends EventEmitter {
   private apiKey: string;
@@ -26,6 +15,7 @@ export class SendsayClient extends EventEmitter {
   private credentials: SendsayCredentials | null = null;
 
   private session = '';
+  private policy = '';
   private pathPrefix = '';
 
   constructor(apiKey: string, apiUrl: string = DEFAULT_API_URL, credentials?: SendsayCredentials) {
@@ -77,9 +67,18 @@ export class SendsayClient extends EventEmitter {
     });
   }
 
-  private prepareBody(body: Record<string, unknown>): Record<string, unknown> {
-    // #TODO: append request.id, apiKey, etc.
-    return body;
+  private prepareBody(body: SendsayBody): SendsayBody {
+    return {
+      ...body,
+      ...(this.apiKey && { apiKey: this.apiKey }),
+      ...(this.session && { session: this.session }),
+      ...(this.policy && { 'lbac.policy': this.policy }),
+    };
+  }
+
+  private handleErrors<T extends SendsayResponse>(response: T): void {
+    // #TODO: Implement errors handling
+    console.log(response);
   }
 
   private get url(): string {
